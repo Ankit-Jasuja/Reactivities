@@ -1,0 +1,3 @@
+add-migration InitialCreate -Project Persistence -StartupProject API
+//persistence is where datacontext is located.So target proejct is Persitence
+
