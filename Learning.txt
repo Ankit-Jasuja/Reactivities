@@ -5,3 +5,10 @@ API=>dotnet watch core
 
 npx create-react-app client-app --use-npm --template typescript 
 //creating new react app using typescript
+
+Hooks : Use State is going to allow us to store state inside our component.
+and the other one is a use effect, which allows us to use side effects when a component initializes
+and our side effects that we're going to use is to go and actually get the data from our API.
+
+const[activities,setActivities]= useState([]);//setting activities to empty initially
+use will use setActivities function to set the state activities.
