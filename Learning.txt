@@ -1,3 +1,7 @@
 add-migration InitialCreate -Project Persistence -StartupProject API
 //persistence is where datacontext is located.So target proejct is Persitence
 
+API=>dotnet watch core
+
+npx create-react-app client-app --use-npm --template typescript 
+//creating new react app using typescript
