@@ -13,19 +13,20 @@ interface Props {
     editMode: boolean;
     openForm: (id: string) => void;
     closeForm: () => void;
-    createorEdit:(activity:Activity)=>void
-    deleteActivity:(id: string)=>void
+    createorEdit: (activity: Activity) => void
+    deleteActivity: (id: string) => void
+    submitting: boolean
 }
 
-export default function ({ activities, selectedActivity, 
-    selectActivity, cancelSelectActivity, editMode, openForm, closeForm,createorEdit,deleteActivity }: Props) {
+export default function ({ activities, selectedActivity,
+    selectActivity, cancelSelectActivity, editMode, openForm, closeForm, createorEdit, deleteActivity,submitting }: Props) {
     return (
         <Grid>
             <Grid.Column width='10'>
-                <ActivityList 
-                activities={activities} 
-                selectActivity={selectActivity}
-                deleteActivity={deleteActivity}></ActivityList>
+                <ActivityList
+                    activities={activities}
+                    selectActivity={selectActivity}
+                    deleteActivity={deleteActivity}></ActivityList>
             </Grid.Column>
             <Grid.Column width='6'>
                 {selectedActivity && !editMode &&
@@ -34,7 +35,11 @@ export default function ({ activities, selectedActivity,
                         cancelSelectActivity={cancelSelectActivity}
                         openForm={openForm}></ActivityDetails>}
                 {editMode &&
-                    <ActivityForm closeForm={closeForm} activity={selectedActivity} createorEdit={createorEdit} />
+                    <ActivityForm
+                        closeForm={closeForm}
+                        activity={selectedActivity}
+                        createorEdit={createorEdit}
+                        submitting={submitting} />
                 }
             </Grid.Column>
         </Grid>
