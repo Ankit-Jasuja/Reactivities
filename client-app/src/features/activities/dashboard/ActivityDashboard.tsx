@@ -19,14 +19,16 @@ interface Props {
 }
 
 export default function ({ activities, selectedActivity,
-    selectActivity, cancelSelectActivity, editMode, openForm, closeForm, createorEdit, deleteActivity,submitting }: Props) {
+    selectActivity, cancelSelectActivity, editMode, openForm,
+    closeForm, createorEdit, deleteActivity, submitting }: Props) {
     return (
         <Grid>
             <Grid.Column width='10'>
                 <ActivityList
                     activities={activities}
                     selectActivity={selectActivity}
-                    deleteActivity={deleteActivity}></ActivityList>
+                    deleteActivity={deleteActivity}
+                    submitting={submitting}></ActivityList>
             </Grid.Column>
             <Grid.Column width='6'>
                 {selectedActivity && !editMode &&
