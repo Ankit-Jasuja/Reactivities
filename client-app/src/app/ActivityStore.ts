@@ -15,18 +15,22 @@ export default class ActivityStore {
     }
 
     loadActivities = async () => {
-        this.loadingInitial = true;
+        this.setLoadingInital(true);
         try {
             const activities = await agent.Activities.list();
             activities.forEach(activity => {
                 activity.date = activity.date.split('T')[0];
                 this.activities.push(activity);//we do not do it redux but mobx creates allow us to mutate the state
             })
-            this.loadingInitial = false;
+            this.setLoadingInital(false);
         } catch (error) {
             console.log(error);
-            this.loadingInitial = false;
+            this.setLoadingInital(false);;
         }
+    }
+
+    setLoadingInital = (state:boolean)=>{
+            this.loadingInitial = state;
     }
 
 }
