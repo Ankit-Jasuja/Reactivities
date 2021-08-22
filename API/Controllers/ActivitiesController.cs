@@ -14,19 +14,25 @@ namespace API.Controllers
     public class ActivitiesController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>>GetActivities()
+        public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-           return await Mediator.Send(new List.Query()); 
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Activity>> GetActivity(Guid id)
+        public async Task<IActionResult> GetActivity(Guid id)
         {
-            return await Mediator.Send(new Details.Query{Id = id});
+            var result = await Mediator.Send(new Details.Query { Id = id });
+            return HandleResult(result);
+            //var activity = await Mediator.Send(new Details.Query { Id = id }); 
+            //if (activity == null) return NotFound();
+            //return activity;
+            //this is another way to handle Api error response but here we are making our controllers thin following CQRS,
+            //So handling error response should not be done in ApiController
         }
 
         [HttpPost]
-        public async Task<IActionResult>CreateActivity(Activity activity)
+        public async Task<IActionResult> CreateActivity(Activity activity)
         {
             return Ok(await Mediator.Send(new Create.Command { Activity = activity }));
         }
