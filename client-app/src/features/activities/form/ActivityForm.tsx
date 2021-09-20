@@ -3,12 +3,13 @@ import React, { ChangeEvent } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Button, FormField, Label, Segment } from 'semantic-ui-react';
+import { Button, Label, Segment } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/Store';
 import { v4 as uuid } from 'uuid';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import MyTextInput from '../../../app/common/form/MyTextInput';
 
 export default observer(function ActivityForm() {
 
@@ -29,7 +30,13 @@ export default observer(function ActivityForm() {
     });
 
     const validationSchema = yup.object({
-        title: yup.string().required('The activity title is required')
+        title: yup.string().required('The activity title is required'),
+        description: yup.string().required('The activity description is required'),
+        category: yup.string().required(),
+        date: yup.string().required(),
+        venue: yup.string().required(),
+        city: yup.string().required()
+
     })
 
     useEffect(() => {
@@ -62,16 +69,12 @@ export default observer(function ActivityForm() {
                 onSubmit={values => console.log(values)}>
                 {({ handleSubmit }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='Off'>
-                        <FormField >
-                            <Field placeholder='Title' name='title' />
-                            <ErrorMessage name='title' 
-                            render={error => <Label basic color='red' content={error} />} />
-                        </FormField>
-                        <Field placeholder='Description' name='description' />
-                        <Field placeholder='Category' name='category' />
-                        <Field type='Date' placeholder='Date' name='date' />
-                        <Field placeholder='City' name='city' />
-                        <Field placeholder='Venue' name='venue' />
+                        <MyTextInput name='title' placeholder='Title'/>
+                        <MyTextInput placeholder='Description' name='description' />
+                        <MyTextInput placeholder='Category' name='category' />
+                        <MyTextInput placeholder='Date' name='date' />
+                        <MyTextInput placeholder='City' name='city' />
+                        <MyTextInput placeholder='Venue' name='venue' />
                         <Button loading={loading} floated='right' positive type='submit' content='Submit' />
                         <Button as={Link} to='/activities' floated='right' type='button' content='Cancel' />
                     </Form>
