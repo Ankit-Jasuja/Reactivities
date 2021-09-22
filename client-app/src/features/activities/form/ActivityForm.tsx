@@ -10,6 +10,7 @@ import { v4 as uuid } from 'uuid';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import MyTextInput from '../../../app/common/form/MyTextInput';
+import MyTextArea from '../../../app/common/form/MyTextArea';
 
 export default observer(function ActivityForm() {
 
@@ -70,7 +71,7 @@ export default observer(function ActivityForm() {
                 {({ handleSubmit }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='Off'>
                         <MyTextInput name='title' placeholder='Title'/>
-                        <MyTextInput placeholder='Description' name='description' />
+                        <MyTextArea rows={3} placeholder='Description' name='description' />
                         <MyTextInput placeholder='Category' name='category' />
                         <MyTextInput placeholder='Date' name='date' />
                         <MyTextInput placeholder='City' name='city' />
