@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,12 @@ namespace API.Services
 {
     public class TokenService
     {
+        private readonly IConfiguration _configuration;
+
+        public TokenService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public string CreateToken(AppUser user)
         {
@@ -23,7 +30,7 @@ namespace API.Services
 
             //we have to sign the token
             //sign a token with encrption key
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super secret key"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["TokenKey"]));
             var credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha512Signature);
 
             //describe our token
