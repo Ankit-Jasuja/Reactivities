@@ -4,6 +4,7 @@ using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -17,8 +18,8 @@ namespace API.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly TokenService _tokenService;
 
-        public AccountController(UserManager<AppUser> userManager, 
-            SignInManager<AppUser> signInManager,TokenService tokenService)
+        public AccountController(UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager, TokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -45,7 +46,44 @@ namespace API.Controllers
                 };
             }
             return Unauthorized();
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        {
+            if (await _userManager.Users.AnyAsync(z => z.Email == registerDto.Email))
+            {
+                return BadRequest("Email taken");
+            }
+
+            if (await _userManager.Users.AnyAsync(z => z.UserName == registerDto.UserName))
+            {
+                return BadRequest("username taken");
+            }
+
+            var user = new AppUser
+            {
+                DisplayName = registerDto.DisplayName,
+                Email = registerDto.Email,
+                UserName = registerDto.UserName
+            };
+
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+            if (result.Succeeded)
+            {
+                return new UserDto
+                {
+                    DisplayName = user.DisplayName,
+                    Image = null,
+                    Token = _tokenService.CreateToken(user),
+                    UserName = user.UserName
+                };
+            }
+
+            return BadRequest("problem registering user");
 
         }
+
     }
 }
