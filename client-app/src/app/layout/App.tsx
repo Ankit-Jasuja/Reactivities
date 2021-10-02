@@ -12,6 +12,7 @@ import TestErrors from '../../features/errors/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
 import ServerError from '../../features/errors/ServerError';
+import LoginForm from '../../features/users/LoginForm';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
                 <Route key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} /> {/* location key changes,component activity form will reset itself instead of updating,so ensuring the useEffect is executed when the key changes */}
                 <Route path='/errors' component={TestErrors} />
                 <Route path='/server-error' component={ServerError} />
+                <Route path='/login' component={LoginForm} />
                 <Route component={NotFound} />
               </Switch>
             </Container>
