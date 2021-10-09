@@ -15,7 +15,7 @@ export default class CommonStore{
  }
 
  setToken = (token:string | null)=>{
-     if(token) window.localStorage.setItem('seed',token);
+     if(token) window.localStorage.setItem('jwt',token);
      this.token=token;
  } 
 
