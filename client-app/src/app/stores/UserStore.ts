@@ -21,7 +21,7 @@ import { store } from "./Store";
            store.commonStore.setToken(user.token);
            runInAction(()=>this.user = user);
            history.push('/activities');
-           console.log(user);
+           store.modalStore.closeModal();
          }
          catch(error){
              throw error;
@@ -33,5 +33,15 @@ import { store } from "./Store";
          window.localStorage.removeItem('jwt');
          this.user = null;
          history.push('/');
+     }
+
+     getUser = async  ()=>{
+        try{
+            const user = await agent.Account.current();
+            runInAction(()=>this.user = user)
+        }
+        catch(error){
+            console.log(error);
+        }
      }
  }
